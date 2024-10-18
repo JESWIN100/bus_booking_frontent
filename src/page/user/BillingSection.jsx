@@ -79,7 +79,7 @@ const data = {
 const phonePayPayment = async () => {
   // e.preventDefault(); 
 
-    await axios.post("http://localhost:3690/api/v1/payment/create",data )
+    await axiosInstance.post("/payment/create",data )
     .then((response)=>{
       if(response.data && response.data.data.instrumentResponse.redirectInfo.url){
         window.location.href=response.data.data.instrumentResponse.redirectInfo.url
