@@ -76,8 +76,10 @@ export default function HomePage() {
       <h1 className="text-4xl sm:text-5xl font-extrabold drop-shadow-lg flex items-center justify-center mt-10 sm:mt-32 max-w-4xl mx-auto">
         India's No. 1 Online Bus Ticket Booking Site
       </h1>
-
-      <SearchForm/>
+<div className='flex justify-center items-center'>
+<SearchForm/>
+</div>
+    
 
       <p className="text-white mt-8 sm:mt-12 text-sm sm:text-base max-w-4xl mx-auto">
         Plan your journey with ease! Search buses across India and book your tickets with a few simple steps. Comfortable, safe, and hassle-free travel awaits.

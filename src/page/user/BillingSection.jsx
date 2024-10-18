@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { Timer } from 'lucide-react';
-
+import axios from 'axios';
 export default function BillingSection() {
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -44,6 +44,8 @@ export default function BillingSection() {
       setDiscount(0);
     }
   };
+
+  
   const onSubmit = async(data) => {
     try {
       // Send the data to your API
@@ -55,12 +57,46 @@ export default function BillingSection() {
       }, { withCredentials: true });
       console.log(response.data);
       toast.success("added scuessfully!!")
+      await phonePayPayment()
     } catch (error) {
       console.error('Error submitting form', error);
       toast.error(error.response.data.message)
       
     }
   };
+
+
+  
+
+ 
+const data = {
+  name: "hiii",
+  MUID: "MUID" + Date.now(),
+  transactionId: 'T' + Date.now(),
+  amount: finalPrice,
+};
+
+const phonePayPayment = async () => {
+  // e.preventDefault(); 
+
+    await axios.post("http://localhost:3690/api/v1/payment/create",data )
+    .then((response)=>{
+      if(response.data && response.data.data.instrumentResponse.redirectInfo.url){
+        window.location.href=response.data.data.instrumentResponse.redirectInfo.url
+    }
+
+      })
+      .catch(error=>{
+        console.log(error);
+        
+      })
+   
+  
+};
+  
+  
+
+
 
  
   useEffect(() => {
@@ -91,7 +127,6 @@ export default function BillingSection() {
         </p>
       </div>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="p-6">
           {/* Booking Info */}
           <h2 className="text-lg font-bold text-gray-900 ">{busDetail.busName}</h2>
@@ -123,7 +158,7 @@ export default function BillingSection() {
   {seatData.booking.seatNumbers.map((seat, index) => (
     <span 
       key={index}
-      className="bg-red-500 text-white rounded-full px-3 py-1 mr-2 mb-2 w-10  shadow-lg"
+      className="bg-red-500 text-white rounded-full px-3 py-1 mr-2 mb-2 w-auto  shadow-lg"
     >
       {seat}
     </span>
@@ -298,10 +333,13 @@ export default function BillingSection() {
                  type="submit" 
                  className="btn btn-outline btn-error text-white w-full py-2 rounded"
                  disabled={isButtonDisabled}
+                //  onClick={makePayment}
                  >
 
                   CONTINUE
                 </button>
+{/* <button className='btn btn-outline btn-error' onClick={phonePayPayment}>fghghgh</button> */}
+
                 <p className="text-xs text-black mt-2">
                   By proceeding, I agree to BookMe's{" "}
                   <a href="#" className="text-red-600">User Agreement</a>,{" "}
