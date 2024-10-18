@@ -39,8 +39,8 @@ export default function BusDetailPage() {
         </div>
       </div>
       <div className="text-right mt-4 md:mt-0">
-        <p className="text-xl font-bold text-blue-600">₹ 327 - ₹{lastPrice}</p>
-        <button onClick={toggleKeralaBuses} className="text-blue-600">
+        <p className="text-xl font-bold text-red-600">₹ 327 - ₹{lastPrice}</p>
+        <button onClick={toggleKeralaBuses} className="text-red-600">
           {showKeralaBuses ? 'HIDE KERALA BUSES' : 'SHOW KERALA BUSES'}
           <i className={`fas fa-chevron-${showKeralaBuses ? 'up' : 'down'} ml-2`}></i>
         </button>

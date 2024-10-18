@@ -116,8 +116,8 @@ const phonePayPayment = async () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className=" mx-auto bg-white shadow-md mt-10 ">
+    <div className="min-h-screen bg-gray-100 py-5">
+      <div className=" mx-auto bg-white shadow-md  ">
         <div className="bg-red-900 text-white p-4 h-20 flex justify-between">
           <h1 className="text-xl font-bold mt-2">Complete your booking</h1>
           <div className="flex items-center">
@@ -189,23 +189,18 @@ const phonePayPayment = async () => {
                     {...register("age")}
                   />
                   <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Male"
-                      className="mr-1"
-                      {...register("gender")}
-                    />
-                    <label htmlFor="male" className="mr-4">Male</label>
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Female"
-                      className="mr-1"
-                      {...register("gender")}
-                    />
-                    <label htmlFor="female">Female</label>
-                  </div>
+  <label htmlFor="gender" className="mr-4 text-black">Gender:</label>
+  <select
+    id="gender"
+    className="mr-1 bg-white text-black"
+    {...register("gender")}
+  >
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+</div>
+
                 </div>
               </div>
 

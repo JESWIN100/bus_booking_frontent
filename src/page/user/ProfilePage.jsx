@@ -46,34 +46,39 @@ export default function ProfilePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formDataToSubmit = { ...formData };
-    const formDataObj = new FormData(); // FormData to handle image upload
-
+    const formDataObj = new FormData();
+  
+    // Ensure otpExpiry is set correctly or removed if null
+    if (!formDataToSubmit.otpExpiry || formDataToSubmit.otpExpiry === "null") {
+      delete formDataToSubmit.otpExpiry; 
+    }
+  
     // Append form data
     Object.keys(formDataToSubmit).forEach((key) => {
       formDataObj.append(key, formDataToSubmit[key]);
     });
-
+  
     // Append image if any file is selected
     if (imageFile) {
       formDataObj.append('image', imageFile);
     }
-
+  
     try {
       const response = await axiosInstance.put(`/user/updateUser/${formData._id}`, formDataObj, {
         withCredentials: true,
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log(response.data);
-      // toast.success('Form Submitted')
+      // toast.success('Form Submitted');
     } catch (error) {
       console.log(error);
     }
-
+  
     setIsEditing(false);
   };
-
+  
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',

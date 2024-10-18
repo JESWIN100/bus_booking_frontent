@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import Lottie from 'lottie-react'
-import sucess from '../../assets/Animation - 1729147548554.json'
+import sucess from '../../assets/Animation - 1729145149595.json'
 export default function SuccessPage() {
   const navigate = useNavigate();
 

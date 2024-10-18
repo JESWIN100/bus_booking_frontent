@@ -91,17 +91,18 @@ const [dropoffStage, setDropoffStage] = useState('');
   <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row space-x-0 md:space-x-8 ">
     <button
       onClick={onClose}
-      className="absolute top-2 right-2 text-gray-500"
+      className="absolute top-1 right-0 text-gray-900"
       aria-label="Close modal"
     >
       <FaTimes />
     </button>
     <div className="flex flex-col items-center  md:mb-0">
-      <div className="mb-4 text-center">
-        <p className="bg-blue-100 text-blue-600 px-4 py-2 rounded">
-          Click on an Available seat to proceed with your transaction.
-        </p>
-      </div>
+    <div className="hidden lg:block mb-4 text-center">
+  <p className="bg-blue-100 text-blue-600 px-4 py-2 rounded">
+    Click on an Available seat to proceed with your transaction.
+  </p>
+</div>
+
       <div className="relative">
         <div className="absolute top-0 left-0 w-full h-full">
           <img className='absolute w-8 rotate-360' src="https://s.alicdn.com/@sc04/kf/Ha321851f480843e8ac831ab17d00b178s.jpg_720x720q50.jpg" alt="Steering Wheel" />
