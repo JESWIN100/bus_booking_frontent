@@ -59,7 +59,7 @@ const OTPVerification = () => {
     
             if (response.data.success) {
                 toast.success("Verified successfully!");
-                navigate('/');
+                navigate('/user/home');
             } else {
                 toast.error("Verification failed. Please try again.");
             }

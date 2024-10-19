@@ -1,5 +1,5 @@
 import React from 'react'
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Headset } from 'lucide-react';
 import Lottie from 'lottie-react';
@@ -24,9 +24,9 @@ export default function LoginAfterHeader() {
       if (response.data) {
         console.log('Logout successful:', response.data.message);
         Cookies.remove('token');
-        setProfile(null); // Clear profile on logout
-        setButtonDisabled(false); // Re-enable button
-        window.location.reload(); // Reload to refresh UI
+        setProfile(null); 
+        setButtonDisabled(false); 
+       navigate('/')
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -107,9 +107,9 @@ export default function LoginAfterHeader() {
               Logout
             </button>
           {/* ) : ( */}
-            <Link to="/booking/login">
+            {/* <Link to="/booking/login">
               <button className="btn btn-outline">Login</button>
-            </Link>
+            </Link> */}
           {/* )} */}
         </div>
       </div>

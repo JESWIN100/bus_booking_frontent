@@ -10,6 +10,7 @@ import TicketField from "../components/user/TicketField";
 import ProfilePage from "../page/user/ProfilePage";
 import OtpInput from "../page/user/OtpInput";
 import SignupPage from "../page/user/SignupPage";
+import SecoundLayout from "../layout/SecoundLayout";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,33 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: 'bus',
+        element: <BusDetailPage />,
+      },
+      {
+        path: 'my-ticket',
+        element: <  TicketField/>,
+      },
+      {
+        path: 'ticket-details',
+        element: <   MyTicket/>,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage/>,
+      },
+      
+    ],
+  },
+  {
+    path: '/user',
+    element: <SecoundLayout />, 
+    children: [
+      {
+        path: 'home',
         element: <HomePage />,
       },
       {

@@ -23,10 +23,10 @@ export default function Header() {
 
       if (response.data) {
         console.log('Logout successful:', response.data.message);
-        Cookies.remove('__vercel_live_token');
+        Cookies.remove('token');
         setProfile(null); 
         setButtonDisabled(false); 
-        window.location.reload();
+        navigate('/user/home')
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -43,12 +43,12 @@ export default function Header() {
       try {
         const response = await axiosInstance.get('/user/profile', { withCredentials: true });
         const { data } = response.data;
-        setProfile(data); // Set the profile data if available
+        setProfile(data); 
       } catch (error) {
         console.log('Error fetching profile:', error);
       }
     };
-    fetchUserProfile(); // Fetch user profile on component mount
+    fetchUserProfile(); 
   }, []);
 
   return (
@@ -99,13 +99,13 @@ export default function Header() {
 
           <div>
             {/* {profile ? ( */}
-              <button
+              {/* <button
                 onClick={handleLogout}
                 className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
                 disabled={isButtonDisabled}
               >
                 Logout
-              </button>
+              </button> */}
             {/* ) : ( */}
               <Link to="/booking/login">
                 <button className="btn btn-outline">Login</button>
