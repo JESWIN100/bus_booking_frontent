@@ -23,10 +23,10 @@ export default function Header() {
 
       if (response.data) {
         console.log('Logout successful:', response.data.message);
-        Cookies.remove('token');
+        Cookies.remove("token");
         setProfile(null); 
         setButtonDisabled(false); 
-        navigate('/user/home')
+        
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -99,13 +99,13 @@ export default function Header() {
 
           <div>
             {/* {profile ? ( */}
-              {/* <button
+              <button
                 onClick={handleLogout}
                 className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
                 disabled={isButtonDisabled}
               >
                 Logout
-              </button> */}
+              </button>
             {/* ) : ( */}
               <Link to="/booking/login">
                 <button className="btn btn-outline">Login</button>
