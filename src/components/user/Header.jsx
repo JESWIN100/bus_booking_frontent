@@ -1,50 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Headset } from 'lucide-react';
-import logo from '../../assets/Handdrawn Circle Logo.png';
-import { axiosInstance } from '../../config/axiosInstance';
+import Lottie from 'lottie-react';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-import Lottie from 'lottie-react';
-import loginAnimation from '../../assets/bus.json'; 
+import loginAnimation from '../../assets/bus.json';
+import { axiosInstance } from '../../config/axiosInstance';
+import logo from '../../assets/Handdrawn Circle Logo.png';
+
 export default function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [profile, setProfile] = useState(null);
-  const [isButtonDisabled, setButtonDisabled] = useState(false); // State for button toggle
+  const [profile, setProfile] = useState(null); // Holds user data
+  const [isButtonDisabled, setButtonDisabled] = useState(false); // Disable button on logout click
 
   const navigate = useNavigate();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
-  const closeDropdown = () => {
-    setDropdownOpen(false);
-  };
+  const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+  const closeDropdown = () => setDropdownOpen(false);
 
   const handleLogout = async () => {
     try {
       const response = await axiosInstance.post('/user/logout', {}, { withCredentials: true });
-        // window.location.reload()
+
       if (response.data) {
-        console.log(response.data.message);
-      
+        console.log('Logout successful:', response.data.message);
+        Cookies.remove('token');
+        setProfile(null); // Clear profile on logout
+        setButtonDisabled(false); // Re-enable button
+        window.location.reload(); // Reload to refresh UI
       }
-      console.log(response.data.message);
-      Cookies.remove('token');
-      setButtonDisabled(false); 
-      window.location.reload()
-      
     } catch (error) {
-      console.error(error);
-      if (error.response && error.response.data && error.response.data.message) {
+      console.error('Logout error:', error);
+      if (error.response?.data?.message) {
         toast.error(error.response.data.message);
-        if (error.response.data.message === "User not authenticated") {
-          // navigate('/booking/login');
-          setButtonDisabled(true); // Disable button on specific error
-        }
       } else {
-        toast.error("An error occurred while adding to wishlist. Please try again.");
+        toast.error("An error occurred during logout.");
       }
     }
   };
@@ -53,31 +43,28 @@ export default function Header() {
     const fetchUserProfile = async () => {
       try {
         const response = await axiosInstance.get('/user/profile', { withCredentials: true });
-        const { data } = response.data; // Ensure your response structure is correct
-        setProfile(data);
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      } 
+        const { data } = response.data;
+        setProfile(data); // Set the profile data if available
+      } catch (error) {
+        console.log('Error fetching profile:', error);
+      }
     };
-
-    fetchUserProfile();
+    fetchUserProfile(); // Fetch user profile on component mount
   }, []);
 
   return (
-    <div>
     <header className="bg-white p-4 shadow-lg h-auto md:h-32">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center h-full">
         <Link to={'/'}>
           <Lottie animationData={loginAnimation} loop={true} className="w-24 h-24 md:w-32 md:h-32" />
         </Link>
-        <div className="flex items-center space-x-4 md:space-x-6 mt-4 md:mt-0">
-        <div className="text-gray-900 flex items-center hover:text-blue-600 transition duration-200 cursor-pointer hidden md:flex">
-  <Link to="/contact" className="mr-2 text-sm md:text-base">Contact Us</Link>
-  <Headset className="h-5 w-5 md:h-6 md:w-6" />
-</div>
 
-  
+        <div className="flex items-center space-x-4 md:space-x-6 mt-4 md:mt-0">
+          <div className="text-gray-900 flex items-center hover:text-blue-600 transition duration-200 cursor-pointer hidden md:flex">
+            <Link to="/contact" className="mr-2 text-sm md:text-base">Contact Us</Link>
+            <Headset className="h-5 w-5 md:h-6 md:w-6" />
+          </div>
+
           <div className="relative">
             <div
               tabIndex={0}
@@ -91,7 +78,7 @@ export default function Header() {
                 className="w-full h-full object-cover"
               />
             </div>
-  
+
             {isDropdownOpen && (
               <ul
                 className="dropdown-content menu absolute right-0 mt-2 bg-white text-black rounded-lg w-52 p-2 shadow-lg z-50"
@@ -110,22 +97,24 @@ export default function Header() {
               </ul>
             )}
           </div>
-  
+
           <div>
             {profile ? (
-              <button onClick={handleLogout} className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`} disabled={isButtonDisabled}>
+              <button
+                onClick={handleLogout}
+                className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
+                disabled={isButtonDisabled}
+              >
                 Logout
               </button>
             ) : (
               <Link to="/booking/login">
-                <button className='btn btn-outline'>Login</button>
+                <button className="btn btn-outline">Login</button>
               </Link>
             )}
           </div>
         </div>
       </div>
     </header>
-  </div>
-   
   );
 }
