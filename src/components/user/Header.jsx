@@ -13,31 +13,19 @@ export default function Header() {
   const [isButtonDisabled, setButtonDisabled] = useState(false); // Disable button on logout click
 
   const navigate = useNavigate();
-            
+
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const closeDropdown = () => setDropdownOpen(false);
-
 
   const handleLogout = async () => {
     try {
       const response = await axiosInstance.post('/user/logout', {}, { withCredentials: true });
-  
+
       if (response.data) {
         console.log('Logout successful:', response.data.message);
-        
-        // Clear cookies (e.g., token)
-        Cookies.remove('token');  // Remove specific token cookie
-        Cookies.remove('session'); // Example of clearing another cookie (optional)
-        
-        // Clear any tokens in localStorage or sessionStorage
-        localStorage.clear(); // Clear all items in localStorage
-        sessionStorage.clear(); // Clear all items in sessionStorage
-        
-        // Clear user profile and reset button state
-        setProfile(null);
+        Cookies.remove('__vercel_live_token');
+        setProfile(null); 
         setButtonDisabled(false); 
-  
-        // Reload the page to reflect the logout state
         window.location.reload();
       }
     } catch (error) {
@@ -49,7 +37,6 @@ export default function Header() {
       }
     }
   };
-  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
