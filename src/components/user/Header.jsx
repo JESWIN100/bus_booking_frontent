@@ -25,18 +25,18 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       const response = await axiosInstance.post('/user/logout', {}, { withCredentials: true });
-        window.location.reload()
+        // window.location.reload()
       if (response.data) {
         console.log(response.data.message);
       
       }
-
-      
+      console.log(response.data.message);
       Cookies.remove('token');
-      setButtonDisabled(false); // Reset button state after logout
-      return response.data; 
+      setButtonDisabled(false); 
+      window.location.reload()
+      
     } catch (error) {
-      console.error('Logout failed:', error.response?.data?.message || 'An error occurred');
+      console.error(error);
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
         if (error.response.data.message === "User not authenticated") {

@@ -24,7 +24,7 @@ export default function BusDetailPage() {
   return (
     <>
     <div className="bg-gray-100 p-4">
-  <div className="mx-auto bg-white rounded-lg shadow-md ">
+  <div className="mx-auto bg-white rounded-lg shadow-md max-w-screen-2xl">
     <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border-b">
       <div className="flex items-center">
         <img
