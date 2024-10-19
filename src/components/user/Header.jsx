@@ -99,7 +99,7 @@ export default function Header() {
           </div>
 
           <div>
-            {profile ? (
+            {/* {profile ? ( */}
               <button
                 onClick={handleLogout}
                 className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
@@ -107,11 +107,11 @@ export default function Header() {
               >
                 Logout
               </button>
-            ) : (
+            {/* ) : ( */}
               <Link to="/booking/login">
                 <button className="btn btn-outline">Login</button>
               </Link>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>
