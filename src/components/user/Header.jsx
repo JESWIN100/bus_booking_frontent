@@ -10,51 +10,29 @@ import { axiosInstance } from '../../config/axiosInstance';
 export default function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [profile, setProfile] = useState(null); // Holds user data
-  const [isButtonDisabled, setButtonDisabled] = useState(false); // Disable button on logout click
 
   const navigate = useNavigate();
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const closeDropdown = () => setDropdownOpen(false);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axiosInstance.post('/user/logout', {}, { withCredentials: true });
-
-      if (response.data) {
-        console.log('Logout successful:', response.data.message);
-        Cookies.remove("token");
-        setProfile(null); 
-        setButtonDisabled(false); 
-        
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An error occurred during logout.");
-      }
-    }
-  };
-
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await axiosInstance.get('/user/profile', { withCredentials: true });
         const { data } = response.data;
-        setProfile(data); 
+        setProfile(data);
       } catch (error) {
         console.log('Error fetching profile:', error);
       }
     };
-    fetchUserProfile(); 
+    fetchUserProfile();
   }, []);
 
   return (
-    <header className="bg-white p-4 shadow-lg h-auto md:h-32">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center h-full">
-        <Link to={'/'}>
+    <header className="bg-white p-4 shadow-md h-auto md:h-32">
+      <div className="container mx-auto flex flex-row md:flex-row justify-between items-center h-full">
+        <Link>
           <Lottie animationData={loginAnimation} loop={true} className="w-24 h-24 md:w-32 md:h-32" />
         </Link>
 
@@ -70,6 +48,9 @@ export default function Header() {
               role="button"
               onClick={toggleDropdown}
               className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 cursor-pointer hover:shadow-lg transition duration-300"
+              onBlur={closeDropdown}
+              aria-haspopup="true"
+              aria-expanded={isDropdownOpen}
             >
               <img
                 src={profile?.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNL_ZnOTpXSvhf1UaK7beHey2BX42U6solRA&s"}
@@ -83,35 +64,40 @@ export default function Header() {
                 className="dropdown-content menu absolute right-0 mt-2 bg-white text-black rounded-lg w-52 p-2 shadow-lg z-50"
                 onBlur={closeDropdown}
               >
-                <li>
+                {/* <li>
                   <Link to="/profile" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
                     Profile
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/my-ticket" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
                     Manage Bookings
                   </Link>
                 </li>
+                <li className="block md:hidden">
+  <Link to="/booking/sign-up" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+    Create
+  </Link>
+</li>
+<li className="block md:hidden">
+  <Link to="/booking/login" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+    Login
+  </Link>
+</li>
+
               </ul>
             )}
           </div>
 
-          <div>
-            {/* {profile ? ( */}
-              <button
-                onClick={handleLogout}
-                className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
-                disabled={isButtonDisabled}
-              >
-                Logout
-              </button>
-            {/* ) : ( */}
-              <Link to="/booking/login">
-                <button className="btn btn-outline">Login</button>
-              </Link>
-            {/* )} */}
-          </div>
+          <div className="hidden md:flex space-x-2 md:space-x-4">
+  <Link to="/booking/sign-up">
+    <button className="btn btn-outline hover:text-white transition duration-300">Create</button>
+  </Link>
+  <Link to="/booking/login">
+    <button className="btn btn-active btn-primary hover:text-white transition duration-300">Login</button>
+  </Link>
+</div>
+
         </div>
       </div>
     </header>

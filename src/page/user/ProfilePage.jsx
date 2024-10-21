@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
+import { MoveLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function ProfilePage() {
   const [formData, setFormData] = useState({});
@@ -88,6 +90,15 @@ export default function ProfilePage() {
    <div className="bg-gray-100 font-roboto min-h-screen ">
   <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
     <div className="flex justify-between items-center mb-6">
+    <div className="flex items-center  bg-gray-100">
+      <Link to={'/user/home'}>
+      <div className="bg-green-300 text-black font-bold py-2 px-4 rounded-full flex gap-3">
+      <MoveLeft />
+        Back to home
+      </div>
+      </Link>
+      
+    </div>
       <h2 className="text-2xl font-bold text-gray-800">
         {isEditing ? 'Edit Profile' : 'My Profile'}
       </h2>
@@ -249,6 +260,7 @@ export default function ProfilePage() {
               </button>
             )}
           </div>
+        
         </div>
       </div>
     </form>

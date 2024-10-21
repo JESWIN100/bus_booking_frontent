@@ -47,33 +47,32 @@ const OTPVerification = () => {
     };
 
     const verifyOTP = async () => {
-        const otpString = otp.join('');
-        setLoading(true);
+        const otpString = otp.join('');  // Convert OTP array into string
+        setLoading(true);  // Set loading state to true
+    
         try {
-            const response = await axiosInstance.post('/user/verify-otp', {
-                email: email,
-                otp: otpString
-            }, {
-                withCredentials: true,
+            const response = await axiosInstance.post('/user/verify-otp', { email, otp: otpString }, {
+                withCredentials: true,  // Ensure cookies are sent
             });
     
             if (response.data.success) {
                 toast.success("Verified successfully!");
-                navigate('/user/home');
+                navigate('/user/home');  
             } else {
                 toast.error("Verification failed. Please try again.");
             }
         } catch (error) {
             console.error(error);
             if (error.response && error.response.data && error.response.data.message) {
-                toast.error(error.response.data.message);
+                toast.error(error.response.data.message);  // Show specific error message
             } else {
-                toast.error("An error occurred. Please try again later.");
+                toast.error("An error occurred. Please try again later.");  // Show generic error message
             }
         } finally {
-            setLoading(false);
+            setLoading(false);  // Reset loading state after completion
         }
     };
+    
 
     const resendOTP = () => {
         navigate('/booking/login');

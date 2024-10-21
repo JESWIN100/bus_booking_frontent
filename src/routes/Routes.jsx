@@ -11,6 +11,7 @@ import ProfilePage from "../page/user/ProfilePage";
 import OtpInput from "../page/user/OtpInput";
 import SignupPage from "../page/user/SignupPage";
 import SecoundLayout from "../layout/SecoundLayout";
+import { UserAuth } from "../protetcedRoutes/userAuth";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/user',
-    element: <SecoundLayout />, 
+    element:<UserAuth><SecoundLayout /></UserAuth> , 
     children: [
       {
         path: 'home',
@@ -60,10 +61,10 @@ export const router = createBrowserRouter([
         path: 'ticket-details',
         element: <   MyTicket/>,
       },
-      {
-        path: 'profile',
-        element: <ProfilePage/>,
-      },
+      // {
+      //   path: 'profile',
+      //   element: <ProfilePage/>,
+      // },
       
     ],
   },
@@ -86,6 +87,10 @@ export const router = createBrowserRouter([
       {
         path: 'sign-up',
         element: <SignupPage />,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage/>,
       },
     ],
   },{

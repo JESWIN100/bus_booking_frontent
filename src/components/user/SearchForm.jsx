@@ -5,7 +5,7 @@ import { FaExchangeAlt } from 'react-icons/fa';
 import { CalendarDays } from 'lucide-react';
 import { axiosInstance } from '../../config/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 const locations = [
     { value: 'Manathavady', label: 'Manathavady' },
     { value: 'Bangalore', label: 'Bangalore' },
@@ -51,15 +51,16 @@ export default function SearchForm() {
                     dropoffLocation: data.dropoffLocation,
                     date: data.date,
                 }
-            });
+            });toast.success("Bus Found!")
+
             setTimeout(() => {
-                navigate('/bus', { state: { bus: response.data } });
+                navigate('/user/bus', { state: { bus: response.data } });
             }, 3000);
             setBus(response.data); 
             console.log(response.data); 
         } catch (error) {
             console.error('Error during form submission:', error);
-            // Optionally set an error state to display to the user
+            toast.error(error.response.data.message)
         } finally {
             setIsLoading(false); 
         }

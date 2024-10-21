@@ -21,11 +21,11 @@ export default function SignupPage() {
     try {
       const response = await axiosInstance.post('/user/create', data, { withCredentials: true });
       console.log('Login successful:', response.data);
-      toast.success('Login successful');
-      navigate("/");
+      toast.success('Created successful');
+      navigate("/booking/login");
     } catch (error) {
       console.error('Login failed:', error);
-      toast.error('Login failed. Please try again.');
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

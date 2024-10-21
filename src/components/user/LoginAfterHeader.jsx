@@ -23,10 +23,10 @@ export default function LoginAfterHeader() {
 
       if (response.data) {
         console.log('Logout successful:', response.data.message);
-        Cookies.remove('token');
+        Cookies.remove("token");
         setProfile(null); 
         setButtonDisabled(false); 
-       navigate('/')
+       navigate('/booking/login')
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -43,18 +43,18 @@ export default function LoginAfterHeader() {
       try {
         const response = await axiosInstance.get('/user/profile', { withCredentials: true });
         const { data } = response.data;
-        setProfile(data); // Set the profile data if available
+        setProfile(data); 
       } catch (error) {
         console.log('Error fetching profile:', error);
       }
     };
-    fetchUserProfile(); // Fetch user profile on component mount
+    fetchUserProfile(); 
   }, []);
 
   return (
     <header className="bg-white p-4 shadow-lg h-auto md:h-32">
-    <div className="container mx-auto flex flex-col md:flex-row justify-between items-center h-full">
-      <Link to={'/'}>
+    <div className="container mx-auto flex flex-row md:flex-row justify-between items-center h-full">
+      <Link >
         <Lottie animationData={loginAnimation} loop={true} className="w-24 h-24 md:w-32 md:h-32" />
       </Link>
 
@@ -84,7 +84,7 @@ export default function LoginAfterHeader() {
               onBlur={closeDropdown}
             >
               <li>
-                <Link to="/profile" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+                <Link to="/booking/profile" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
                   Profile
                 </Link>
               </li>
@@ -93,19 +93,25 @@ export default function LoginAfterHeader() {
                   Manage Bookings
                 </Link>
               </li>
+              <li className='md:hidden'>
+                <button onClick={handleLogout} className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+                 Logout
+                </button>
+              </li>
             </ul>
           )}
         </div>
 
         <div>
           {/* {profile ? ( */}
-            <button
-              onClick={handleLogout}
-              className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''}`}
-              disabled={isButtonDisabled}
-            >
-              Logout
-            </button>
+          <button
+  onClick={handleLogout}
+  className={`btn btn-outline btn-error ${isButtonDisabled ? 'disabled' : ''} hidden md:flex`}
+  disabled={isButtonDisabled}
+>
+  Logout
+</button>
+
           {/* ) : ( */}
             {/* <Link to="/booking/login">
               <button className="btn btn-outline">Login</button>
