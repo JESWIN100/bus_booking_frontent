@@ -75,28 +75,28 @@ export default function Header() {
                   </Link>
                 </li>
                 <li className="block md:hidden">
-  <Link to="/booking/sign-up" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
-    Create
-  </Link>
-</li>
-<li className="block md:hidden">
-  <Link to="/booking/login" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
-    Login
-  </Link>
-</li>
+                  <Link to="/booking/sign-up" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+                    Create
+                  </Link>
+                </li>
+                <li className="block md:hidden">
+                  <Link to="/booking/login" className="hover:bg-gray-200 px-4 py-2 block rounded-lg text-sm md:text-base">
+                    Login
+                  </Link>
+                </li>
 
               </ul>
             )}
           </div>
 
           <div className="hidden md:flex space-x-2 md:space-x-4">
-  <Link to="/booking/sign-up">
-    <button className="btn btn-outline hover:text-white transition duration-300">Create</button>
-  </Link>
-  <Link to="/booking/login">
-    <button className="btn btn-active btn-primary hover:text-white transition duration-300">Login</button>
-  </Link>
-</div>
+            <Link to="/booking/sign-up">
+              <button className="btn btn-outline hover:text-white transition duration-300">Create</button>
+            </Link>
+            <Link to="/booking/login">
+              <button className="btn btn-active btn-primary hover:text-white transition duration-300">Login</button>
+            </Link>
+          </div>
 
         </div>
       </div>
